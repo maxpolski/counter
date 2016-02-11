@@ -2,26 +2,46 @@
 
 let counter = document.querySelector("#counter");
 
-console.log('counter', counter.innerHTML);
-
+//examble of timer params object
 let params = {
-  startFrom:     0,
-  endIn:         12568,
-  symbolsPerTic: 213,
-  counterEl:     counter,
-  tic:           20
+  startsFrom:      3000, //timer starting position
+  endsIn:          12251, //timer end position
+  symbolsPerTick: 513, //number of symbols added per one tick
+  counterEl:      counter, //counter element node
+  tick:           45, //length of the timer tick
+  mode:           "N" //type of counter animation
 }
 
 startCounter(params);
 
+//call this function to start timer
 function startCounter(params) {
-  let diff = params.endIn - params.startFrom;
-  let currentCounterValue = params.startFrom;
+  let currentCounterValue = params.startsFrom;
+  let numOfTicks  = (params.endsIn - params.startsFrom) / params.symbolsPerTick;
+  let tickCounter = 0;
   let timer = window.setInterval(() => {
-    currentCounterValue = currentCounterValue + params.symbolsPerTic <= params.endIn ? currentCounterValue + params.symbolsPerTic : params.endIn;
+    // let innerTimerTickInterval = params.tick;
+    // switch(tickCounter) {
+    //   case tickCounter < numOfTicks / 3:
+    //     innerTimerTickInterval
+    // }
+    // let innerTimer window.setInterval(() => {
+    //
+    // }, innerTimerTickInterval)
+    currentCounterValue = currentCounterValue + params.symbolsPerTick <= params.endsIn ? currentCounterValue + params.symbolsPerTick : params.endsIn;
     params.counterEl.innerHTML = currentCounterValue;
-    if(currentCounterValue === params.endIn) {
+    if(currentCounterValue === params.endsIn) {
       clearInterval(timer);
     }
-  }, params.tic);
+    tickCounter++;
+  }, params.tick);
 }
+/*
+  TYPES OF COUNTER ANIMATIONS
+  ___________________________
+
+  N - Normal
+  SFS - Slow-Fast-Slow
+  FFS - Fast-Fast-Slow
+  SFFF - Slow-Fast-Faster
+*/
